@@ -57,7 +57,7 @@ text(-.5,.55,'\fontsize{15}\bfB')
 % Animate the plot so you see the updating over time
 pause(1)
 for iPlot = 1:timesteps
-    plot(expec_time(1:iPlot+1),'k','Linewidth',2);
+    plot(expec_time(1:iPlot+1),'k','Linewidth',3);
     pause(.2); drawnow()
 end
 
@@ -73,7 +73,7 @@ text(-.1,1.2,'\fontsize{15}\bfC')
 
 for iPlot = 1:timesteps+1
     expec(iPlot + 1) = expec(iPlot) + ((rew(iPlot) - expec(iPlot))*.3);
-    plot(expec(1:iPlot),'k','Linewidth',2);
+    plot(expec(1:iPlot),'k','Linewidth',3);
     drawnow(); pause(.35);
 end
 
@@ -98,16 +98,10 @@ xlabel('timesteps'); ylabel('Expectation for reward')
 text(-.5,1.15,'\fontsize{15}\bfD')
 
 for iPlot = 1:length(alphaVal)
-    plot(expec_alpha(iPlot,:));
+    plot(expec_alpha(iPlot,:),'Linewidth',3);
     title(['Learning rate: ' num2str(alphaVal(iPlot))])
     drawnow(); pause(.35);
 end
 title({'Change in food expectation with continuous rewards','for different learning rates'})
 leg = legend(string(alphaVal),'Location', 'Northwest');
 title(leg,"Alpha's")
-
-%% 2.1.1.2 Increasing the complexity of the models
-
-%% 2.1.1.3 Applying the model to real data
-
-%% 2.1.1.4 Model Checks
