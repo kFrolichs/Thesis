@@ -98,7 +98,7 @@ legPlot3 = subplot(4,5,20); hold on
 plotCol = [217,217,217;189,189,189;150,150,150;99,99,99;37,37,37]/256;
 plot(1,nan,'k','linewidth',3); plot(1,nan,'color',plotCol(1,:),'linewidth',2);
 set(legPlot3,'visible','off');
-l3 = legend('Participant','Model w. param'); title(l3,'fminsearch');
+l3 = legend('Participant','Previous tries'); title(l3,'fminsearch');
 l3.FontSize = 10; l3.Position = [.760653348707,.18744319238,.180246910084,.07008244815];
 
 subplot(4,5,16:19); hold on
@@ -111,7 +111,9 @@ param   = [.05, .8];
 model   = @(param) fitModel(newData,param);
 plot(data, 'k','linewidth',3);
 title('fminsearch visualized')
-global countPlot
+global countPlot trackTries cntTries
+trackTries = [];
+cntTries  = 0;
 countPlot = [];
 
 % Have to rewrite our model slightly to accomodate for the fminsearch function
@@ -120,6 +122,14 @@ options = optimset('Display', 'final', 'MaxIter', 1e3);
 [estimates, fval,exitflag,output] = fminsearch(model, param, options);
 % Plotting happens inside the fitModel function
 
+% Replot some of the earlier tries
+takePlot = (abs(sum(diff(trackTries),2)) > 1e-5);
+plotCol  = linspace(.8,0,sum(takePlot));
+for iP = 1:sum(takePlot)
+    plot(trackTries(iP,:),'color',[plotCol(iP),plotCol(iP),plotCol(iP)],'linewidth',2)
+end
+
+% Replot the last values
 t1 = text(16,8,['\fontsize{12}\alpha: ' num2str(estimates(1))]);
 t2 = text(16,10,['\fontsize{12}\gamma: ' num2str(estimates(2))]);
 
@@ -147,7 +157,8 @@ end
 
 % This is the model in a function that returns the fit between data and model
 function fitVal = fitModel(data, param)
-    global countPlot
+    global countPlot trackTries cntTries
+    cntTries = cntTries + 1;
     plotCol = [217,217,217;189,189,189;150,150,150;99,99,99;37,37,37]/256; %#ok<NASGU>
     learnVec   = zeros(20,1);
     learnAndRP = zeros(1,20);
@@ -163,6 +174,10 @@ function fitVal = fitModel(data, param)
         fitVal = 10e6;
     end
     
+    % Save the model every 10 tries
+    if mod(cntTries,5) == 1
+        trackTries = [trackTries; learnAndRP];
+    end
     % Plot the last 5 results as the function is running
     countPlot = [countPlot; learnAndRP];
     for iPlot = 1:size(countPlot,1)
