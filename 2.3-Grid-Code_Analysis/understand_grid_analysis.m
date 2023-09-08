@@ -137,7 +137,7 @@ noiseLvl = .3;
 expAng   = 1:360;
 
 % -== Create Single Voxel's response ==-
-y = cosd( 6*(expAng - phShift)) + randn(1,360)*noiseLvl;
+y  = cosd( 6*(expAng - phShift)) + randn(1,360)*noiseLvl;
 y2 = cosd( 6*(expAng - phShift)) + randn(1,360)*noiseLvl;
 fh = figure; fh.WindowState = 'Maximized';
 
