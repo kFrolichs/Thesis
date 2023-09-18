@@ -106,14 +106,14 @@ for iPatch = 1:12
     yPos = y([1, end],endpoints);
     
     if mod(iPatch,2) == 1
-        col = [1 0 0];
-    else
         col = [0 0 1];
+    else
+        col = [1 0 0];
     end
     patch([xPos(1,1) xPos(2,1) xPos(2,2) xPos(1,2)], [yPos(1,1) yPos(2,1) yPos(2,2) yPos(1,2)], col, 'FaceAlpha', .3, 'EdgeColor','none')
 end
 % Add the last blue one [0 - 15]
-patch([125 244 240 126], [150 150 181 150], [0 0 1], 'FaceAlpha', .3, 'EdgeColor','none')
+patch([125 244 240 126], [150 150 181 150], [1 0 0], 'FaceAlpha', .3, 'EdgeColor','none')
 
 % Add the patch for the left figure
 subplot(5,4,[3 4 7 8]);
@@ -121,9 +121,9 @@ title('Response magnitude based on trial angle')
 angles = [15:30:360, 360, 0, 15];
 for iPatch = 1:12
     if mod(iPatch,2) == 1
-        col = [1 0 0];
-    else
         col = [0 0 1];
+    else
+        col = [1 0 0];
     end
     patch([angles(iPatch) angles(iPatch+1) angles(iPatch+1) angles(iPatch)], [yMins(1) yMins(1) yMins(2) yMins(2)], col, ...
         'FaceAlpha', .2, 'EdgeColor','none')
