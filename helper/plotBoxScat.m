@@ -54,29 +54,29 @@ function plotBoxScat(data, varargin)
     s.CData = col;
 
     %% Add ttest to see if its larger than zero
-    minVal = min(data,[],'all');
-    
-    for iStat = 1:dSize(2)
-        % t-test
-        if ~exist('tesPos','var') || tesPos == 0
-            [~,p,~,stats] = ttest(data(:,iStat),0);
-        elseif strcmpi(varargin{tesPos+1},'left')
-            [~,p,~,stats] = ttest(data(:,iStat),0,'tail','left');
-        elseif strcmpi(varargin{tesPos+1},'right')
-            [~,p,~,stats] = ttest(data(:,iStat),0,'tail','right');
-        end
-        
-        % Bonferroni corrected p-value
-        if p >= pVal
-            text(iStat*.9,minVal*.9,'\bfn.s.')
-        elseif p <= (pVal/5)
-            text(iStat,minVal*.9,'\bf**')
-        else
-            text(iStat,minVal*.9,'\bf*')
-        end
-
-        disp(['t(' num2str(stats.df) ') = ' num2str(stats.tstat) ', p = ' num2str(p)])
-    end
+%     minVal = min(data,[],'all');
+%     
+%     for iStat = 1:dSize(2)
+%         % t-test
+%         if ~exist('tesPos','var') || tesPos == 0
+%             [~,p,~,stats] = ttest(data(:,iStat),0);
+%         elseif strcmpi(varargin{tesPos+1},'left')
+%             [~,p,~,stats] = ttest(data(:,iStat),0,'tail','left');
+%         elseif strcmpi(varargin{tesPos+1},'right')
+%             [~,p,~,stats] = ttest(data(:,iStat),0,'tail','right');
+%         end
+%         
+%         % Bonferroni corrected p-value
+%         if p >= pVal
+%             text(iStat*.9,minVal*.9,'\bfn.s.')
+%         elseif p <= (pVal/5)
+%             text(iStat,minVal*.9,'\bf**')
+%         else
+%             text(iStat,minVal*.9,'\bf*')
+%         end
+% 
+%         disp(['t(' num2str(stats.df) ') = ' num2str(stats.tstat) ', p = ' num2str(p)])
+%     end
     
     %% Plot Settings
     xlim([.25, dSize(2)+.25])

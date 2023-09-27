@@ -145,6 +145,8 @@ title(l,'Neurons')
 xticks(5:10:50); xlabel('Items'); ylabel('Response Magnitude')
 title('Example Neuronal Activity per trait word');
 text(-.1, let_pos(2), 'd','FontSize',20,'units','normalized')
+ylim([0 max(sample_neurons,[],'all')])
+xticklabels({'Factor 1','Factor 2','Factor 3','Factor 4','Factor 5',})
 
 %% Calculate Data RDMs
 % GLM Settings
@@ -197,25 +199,31 @@ par_results_Z = atanh(par_results);
 
 %% Helper function to cleanly plot a Boxplot together with the individual data points
 % Random model
-subplot(3,3,7);
-plotBoxScat(par_results_Z(:,3),'colors',[0 .447 .741])
-% ylim([min(par_results_Z(:,2))*.95 max(par_results_Z(:,2))*1.05])
-title('Random Model'); xticks([]); ylabel('Correlation Coefficients')
-text(let_pos(1), let_pos(2), 'f','FontSize',20,'units','normalized')
+% subplot(3,3,7);
+% plotBoxScat(par_results_Z(:,3),'colors',[0 .447 .741])
+% % ylim([min(par_results_Z(:,2))*.95 max(par_results_Z(:,2))*1.05])
+% title('Random Model'); xticks([]); ylabel('Correlation Coefficients')
+% text(let_pos(1), let_pos(2), 'f','FontSize',20,'units','normalized')
+% 
+% % Coarse Model
+% subplot(3,3,8);
+% plotBoxScat(par_results_Z(:,2),'colors',[.850 .325 .098])
+% % ylim([min(par_results_Z(:,2))*.95 max(par_results_Z(:,2))*1.05])
+% title('Coarse Model'); xticks([]); ylabel('Correlation Coefficients')
+% text(let_pos(1), let_pos(2), 'g','FontSize',20,'units','normalized')
+% 
+% % Fine Model
+% subplot(3,3,9);
+% plotBoxScat(par_results_Z(:,1),'colors',[.929 .694 .125])
+% % ylim([min(par_results_Z(:,1))*.95 max(par_results_Z(:,1))*1.05])
+% title('Fine Model'); xticks([]); ylabel('Correlation Coefficients')
+% text(let_pos(1), let_pos(2), 'h','FontSize',20,'units','normalized')
 
-% Coarse Model
-subplot(3,3,8);
-plotBoxScat(par_results_Z(:,2),'colors',[.850 .325 .098])
-% ylim([min(par_results_Z(:,2))*.95 max(par_results_Z(:,2))*1.05])
-title('Coarse Model'); xticks([]); ylabel('Correlation Coefficients')
-text(let_pos(1), let_pos(2), 'g','FontSize',20,'units','normalized')
-
-% Fine Model
-subplot(3,3,9);
-plotBoxScat(par_results_Z(:,1),'colors',[.929 .694 .125])
-% ylim([min(par_results_Z(:,1))*.95 max(par_results_Z(:,1))*1.05])
-title('Fine Model'); xticks([]); ylabel('Correlation Coefficients')
-text(let_pos(1), let_pos(2), 'h','FontSize',20,'units','normalized')
+subplot(3,3,[7 8 9])
+plotBoxScat(par_results_Z(:,[3,2,1]))
+xticklabels({'Random Model','Coarse Model','Fine Model'})
+ylabel('Correlation Coefficients'); title('Results');
+text(-.05,let_pos(2),'f','FontSize',20,'units','normalized')
 
 %% Add arrows to the plot
 % These coordinates are hard-coded. If the plot size changes these will be incorrect

@@ -39,15 +39,21 @@ for iRun = 1:nRuns
 end
 
 %% Plot the results for the Parameter Recovery
-fh1 = figure; fh1.Position = [375,528,593,571];
+fh1     = figure; fh1.Position = [375,528,593,571];
+let_pos = [-.1, 1.1];
+let     = {'a','b','c'};
+
 for iMod = 1:nMod
     subplot(2,3,iMod);
     scatter(setParam(:,1),recParam(:,iMod));
     xlabel('Set Parameters'); ylabel('Recovered Parameters')
     title(['Model 0' num2str(iMod)]); ylim([0 1])
     text(.3,.9,['\rho: ' num2str(corr(setParam(:,1),recParam(:,iMod)))])
+    
+    text(let_pos(1), let_pos(2), let{iMod},'FontSize',20,'units','normalized')
 end
 sgtitle('Parameter Recovery')
+
 %% Confusion Matrix
 getBIC = zeros(nRuns,nMod,nMod);
 getMin = zeros(nRuns,nMod);
@@ -91,8 +97,10 @@ xticks(1:3); yticks(1:3); xticklabels({'Model 01','Model 02','Model 03'})
 yticklabels({'Model 01','Model 02','Model 03'});
 ylabel('Simulated'); xlabel('Recovered'); title('Confusion Matrix')
 
-% Save the Figure
-saveas(figure(3), 'C:\Users\frolichs\Documents\Koen\Projects\Thesis\Figures\Chapter_02\Figure_03.png')
+text(let_pos(1), let_pos(2), 'd','FontSize',20,'units','normalized')
+
+%% Save the Figure
+saveas(figure(2), 'C:\Users\frolichs\Documents\Koen\Projects\Thesis\Figures\Chapter_02\Figure_03.png')
 cropPlot('C:\Users\frolichs\Documents\Koen\Projects\Thesis\Figures\Chapter_02\Figure_03.png')
 %% Functions used within this file
 %% Simulating Data
